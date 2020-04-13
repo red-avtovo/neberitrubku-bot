@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neberitrubku-bot
+  namespace: bots
+  labels:
+    app: neberitrubku-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neberitrubku-bot
+  template:
+    metadata:
+      labels:
+        app: neberitrubku-bot
+    spec:
+      nodeSelector:
+        host: self
+      containers:
+        - name: neberitrubku-bot
+          image: j0rsa/neberitrubku-bot:latest
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: neberitrubku-bot-secrets
